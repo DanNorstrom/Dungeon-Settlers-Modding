@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>DS.FreeReroll</AssemblyName>
+    <RootNamespace>DS.FreeReroll</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!-- The net6.0 targeting pack isn't cached on this machine (only 8/9/10 are), and
+         retargeting would otherwise trigger a NuGet restore of Microsoft.NETCore.App.Ref.
+         Instead, disable the implicit framework reference and point directly at the
+         net6.0 shared runtime already installed on disk below. Zero network access. -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <!-- Local-only references: everything below already exists on disk as part of
+       the .NET 6 runtime, game, and MelonLoader install. No NuGet packages, no network access. -->
+  <PropertyGroup>
+    <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Dungeon Settlers</GameDir>
+    <Net6RuntimeDir>C:\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.16</Net6RuntimeDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Base class library, from the actual installed net6.0 shared runtime -->
+    <Reference Include="$(Net6RuntimeDir)\*.dll">
+      <Private>false</Private>
+    </Reference>
+    <!-- MelonLoader + Harmony + Il2CppInterop runtime assemblies -->
+    <Reference Include="$(GameDir)\MelonLoader\net6\*.dll">
+      <Private>false</Private>
+    </Reference>
+    <!-- Il2Cpp interop stub assemblies (game types, e.g. Il2CppRefactor.Main.*) -->
+    <Reference Include="$(GameDir)\MelonLoader\Il2CppAssemblies\*.dll">
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

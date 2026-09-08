@@ -1,0 +1,12 @@
+# Claude Code
+.claude/
+CLAUDE.md
+
+# .NET build output
+bin/
+obj/
+*.user
+
+# Visual Studio / Rider
+.vs/
+.idea/
